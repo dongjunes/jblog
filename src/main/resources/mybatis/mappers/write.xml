@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="write">
+
+	<insert id="add" parameterType="writevo">
+	<![CDATA[insert into post values(seq_post.nextval,#{title },#{content },sysdate,#{categoryNo })]]>
+	</insert>
+
+	<select id="getByNo" parameterType="long" resultType="writevo">
+	<![CDATA[select no,title,reg_date as regDate,categofy_No as categoryNo from post where categofy_no=#{categoryNo }]]>
+	</select>
+
+	<select id="getview" parameterType="long" resultType="writevo">
+	<![CDATA[select title,content,reg_date as regDate,categofy_no as categoryNo from post where no=(select max(no) from post where post.CATEGOFY_NO=#{categoryNo })]]>
+	</select>
+
+	<select id="getviewByNo" parameterType="writevo" resultType="writevo">
+	<![CDATA[select title,content,reg_date as regDate,categofy_no as categoryNo from post where no=#{no } and categofy_no=#{categoryNo }]]>
+	</select>
+</mapper>
